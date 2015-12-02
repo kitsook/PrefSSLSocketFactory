@@ -1,11 +1,9 @@
 package net.clarenceho.ssl.test;
 
-import org.junit.*;
-
 import net.clarenceho.ssl.PrefSSLSocketFactory;
 
+import org.junit.*;
 import static org.junit.Assert.*;
-import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
 import java.net.URL;
