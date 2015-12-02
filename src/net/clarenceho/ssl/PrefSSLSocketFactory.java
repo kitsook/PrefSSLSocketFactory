@@ -24,16 +24,16 @@ public class PrefSSLSocketFactory extends SSLSocketFactory {
 
     private SSLSocketFactory factory;
     private String[] ciphers;
-    
+
     /**
      * Creates instance of the factory by specifying the protocol
-     * 
+     *
      * @param protocol SSLContext algorithm to use. e.g. SSL, SSLv2, SSLv3, TLS, TLSv1, TLSv1.1, TLSv1.2
      * @throws KeyManagementException
      * @throws NoSuchAlgorithmException
      */
     public PrefSSLSocketFactory(String protocol) throws KeyManagementException, NoSuchAlgorithmException  {
-        
+
         SSLContext context = SSLContext.getInstance(protocol);
         // use default security providers and random parameter
         context.init(null, null, null);
@@ -45,7 +45,7 @@ public class PrefSSLSocketFactory extends SSLSocketFactory {
 
     /**
      * Creates instance of the factory by providing a delegate factory
-     * 
+     *
      * @param factory The delegate factory
      */
     public PrefSSLSocketFactory(SSLSocketFactory factory) {
@@ -56,7 +56,7 @@ public class PrefSSLSocketFactory extends SSLSocketFactory {
                 Arrays.asList(this.factory.getDefaultCipherSuites())));
     }
 
-    
+
     /**
      * Uses ECDHE cipher suites only
      */
@@ -68,7 +68,7 @@ public class PrefSSLSocketFactory extends SSLSocketFactory {
                 newCiphers.add(cipher);
             }
         }
-        setCipher(newCiphers);        
+        setCipher(newCiphers);
     }
 
     /**
@@ -82,12 +82,12 @@ public class PrefSSLSocketFactory extends SSLSocketFactory {
                 newCiphers.add(cipher);
             }
         }
-        setCipher(newCiphers);        
-        
+        setCipher(newCiphers);
+
     }
 
     /**
-     * Uses forward secrecy ciphers.  Note that this is considered to be UNSAFE!!!
+     * Uses forward secrecy ciphers.
      */
     public void useForwardSecrecy() {
         String[] currentCiphers = this.factory.getDefaultCipherSuites();
@@ -97,20 +97,20 @@ public class PrefSSLSocketFactory extends SSLSocketFactory {
                 newCiphers.add(cipher);
             }
         }
-        setCipher(newCiphers);        
-        
+        setCipher(newCiphers);
+
     }
 
     /**
      * Specifies the cipher suites to use.  Otherwise, will use the factory default
-     * 
+     *
      * @param ciphers
      */
     public void setCipher(List<String>ciphers) {
         this.ciphers = ciphers.toArray(new String[ciphers.size()]);
     }
 
-    
+
     @Override
     public Socket createSocket(Socket arg0, String arg1, int arg2, boolean arg3) throws IOException {
         SSLSocket socket = (SSLSocket)this.factory.createSocket(arg0, arg1, arg2, arg3);
@@ -131,14 +131,14 @@ public class PrefSSLSocketFactory extends SSLSocketFactory {
     @Override
     public Socket createSocket(String arg0, int arg1) throws IOException, UnknownHostException {
         SSLSocket socket = (SSLSocket)this.factory.createSocket(arg0, arg1);
-        socket.setEnabledCipherSuites(this.ciphers);        
+        socket.setEnabledCipherSuites(this.ciphers);
         return socket;
     }
 
     @Override
     public Socket createSocket(InetAddress arg0, int arg1) throws IOException {
         SSLSocket socket = (SSLSocket)this.factory.createSocket(arg0, arg1);
-        socket.setEnabledCipherSuites(this.ciphers);        
+        socket.setEnabledCipherSuites(this.ciphers);
         return socket;
     }
 
@@ -146,14 +146,14 @@ public class PrefSSLSocketFactory extends SSLSocketFactory {
     public Socket createSocket(String arg0, int arg1, InetAddress arg2, int arg3)
             throws IOException, UnknownHostException {
         SSLSocket socket = (SSLSocket)this.factory.createSocket(arg0, arg1, arg2, arg3);
-        socket.setEnabledCipherSuites(this.ciphers);        
+        socket.setEnabledCipherSuites(this.ciphers);
         return socket;
     }
 
     @Override
     public Socket createSocket(InetAddress arg0, int arg1, InetAddress arg2, int arg3) throws IOException {
         SSLSocket socket = (SSLSocket)this.factory.createSocket(arg0, arg1, arg2, arg3);
-        socket.setEnabledCipherSuites(this.ciphers);        
+        socket.setEnabledCipherSuites(this.ciphers);
         return socket;
     }
 }
